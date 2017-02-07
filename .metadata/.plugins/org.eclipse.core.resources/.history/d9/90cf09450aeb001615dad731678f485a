@@ -1,0 +1,12 @@
+package parser;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class JSONObjectAccessor {
+	private String id;
+	private Map<String,Object> metaDataMap = new HashMap<>();
+	private Map<String,Object> attributeMap = new HashMap<>();
+
+	
+}

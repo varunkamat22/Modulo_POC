@@ -1,0 +1,18 @@
+{
+	"id":"com.modulo.login",
+	"dbBacked":false,
+	"attributes":[
+					{
+					 "name":"userName",
+					 "type":"string",
+					 "length":10,
+					 "required":true
+					},
+					{
+					 "name":"password",
+					 "type":"string",
+					 "length":10,
+					 "required":true
+					}
+				 ]
+}

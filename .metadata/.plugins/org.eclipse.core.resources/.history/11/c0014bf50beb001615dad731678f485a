@@ -1,0 +1,18 @@
+package parser;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class JSONObjectAccessor {
+	private String id;
+	private Map<String,Object> metaDataMap = new HashMap<>();
+	private Map<String,Object> attributeMap = new HashMap<>();
+
+	public boolean addMetaData(String key, Object value){
+		return metaDataMap.put(key, value) != null;
+	}
+	
+	public boolean addAttribute(String key, Object value){
+		return attributeMap.put(key, value) != null;
+	}
+}

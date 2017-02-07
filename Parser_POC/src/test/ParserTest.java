@@ -1,0 +1,21 @@
+package test;
+
+import java.io.InputStream;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import parser.DataObject;
+import parser.JSONObjectAccessor;
+import parser.ObjectFileParser;
+
+public class ParserTest {
+
+	public static void main(String[] args) throws Exception {
+		JSONObjectAccessor loginAccessor = ObjectFileParser.getJSONObjectAccessor("/parser/Login.obj");
+		DataObject dObject = loginAccessor.getDataObject();
+		dObject.setAttributeValue("userName", "test");
+		System.out.println(dObject.getAttributeValue("userName"));
+	}
+
+}

@@ -1,0 +1,26 @@
+package parser;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class DataObject {
+	private String id;
+	private Map<String,Object> attributeValueMap = new HashMap<>();
+	
+	public DataObject(String id) {
+		super();
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public boolean setAttributeValue(String key,Object value){
+		return attributeValueMap.put(key, value) != null;
+	}
+	
+	public Object getAttributeValue(String key){
+		return attributeValueMap.get(key);
+	}
+}

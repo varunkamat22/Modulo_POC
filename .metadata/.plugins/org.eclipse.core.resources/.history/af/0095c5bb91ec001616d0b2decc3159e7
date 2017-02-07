@@ -1,0 +1,36 @@
+package parser;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class DataObject {
+	private String id;
+	private Map<String,Object> attributeValueMap = new HashMap<>();
+	private JSONObjectAccessor accessor;
+	
+	public DataObject(String id, JSONObjectAccessor accessor) {
+		super();
+		this.id = id;
+		this.accessor = accessor;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public boolean setAttributeValue(String key,Object value){
+		return attributeValueMap.put(key, value) != null;
+	}
+	
+	public Object getAttributeValue(String key){
+		return attributeValueMap.get(key);
+	}
+	
+	private void validate(String key,Object value) throws Exception{
+		String type = (String) accessor.getAttribute(key+".type");
+		if(type.equals("string") && ((String)value).length() > (int)accessor.getAttribute(key+".length")){
+			throw new Exception(key+" exceeds the maximum allowed length of- "+accessor.getAttribute(key+".length"));
+		}
+	}
+	
+}

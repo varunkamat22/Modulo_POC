@@ -1,0 +1,20 @@
+package test;
+
+import java.io.InputStream;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import parser.JSONObjectAccessor;
+import parser.ObjectFileParser;
+
+public class ParserTest {
+
+	public static void main(String[] args) {
+	 	//JSONObject loginObject = ObjectFileParser.parse("/parser/Login.obj");
+		//InputStream input = ParserTest.class.getResourceAsStream("/parser/Login.obj");
+		JSONObjectAccessor loginAccessor = ObjectFileParser.getJSONObjectAccessor("/parser/Login.obj");
+	 	System.out.println(((Map)loginAccessor.getAttribute("userName")).get("length"));
+	}
+
+}

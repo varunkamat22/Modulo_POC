@@ -1,0 +1,25 @@
+package parser;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import org.json.JSONObject;
+
+public class ObjectFileParser {
+	
+	public JSONObject parse(String objFilePath){
+		StringBuffer jsonData = new StringBuffer("");
+		try(BufferedReader br = new BufferedReader(new FileReader(objFilePath))) {
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				jsonData.append(line + "\n");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new JSONObject(jsonData);
+	}
+}

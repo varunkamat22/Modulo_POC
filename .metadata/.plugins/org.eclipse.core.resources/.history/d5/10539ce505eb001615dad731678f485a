@@ -1,0 +1,13 @@
+package test;
+
+import org.json.JSONObject;
+
+import parser.ObjectFileParser;
+
+public class ParserTest {
+
+	public static void main(String[] args) {
+		JSONObject loginObject = ObjectFileParser.parse("/parser/Login.obj");
+	}
+
+}
