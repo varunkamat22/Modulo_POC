@@ -1,0 +1,19 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import dbconnector.DBConnectionManager;
+import parser.JSONObjectAccessor;
+import parser.ObjectFileParser;
+
+public class DBTester {
+
+	public static void main(String[] args) throws SQLException {
+		JSONObjectAccessor loginAccessor = ObjectFileParser.getJSONObjectAccessor("/parser/Login.obj");
+		Connection _connection = DBConnectionManager.getConnection();
+		
+		_connection.close();
+	}
+
+}

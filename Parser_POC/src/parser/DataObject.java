@@ -33,5 +33,9 @@ public class DataObject {
 			throw new Exception(key+" exceeds the maximum allowed length of- "+accessor.getAttribute(key+".length"));
 		}
 	}
+
+	public Map<String, Object> getAttributeValueMap() {
+		return attributeValueMap;
+	}
 	
 }

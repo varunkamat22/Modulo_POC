@@ -1,0 +1,14 @@
+package test;
+
+import java.sql.Connection;
+
+import dbconnector.DBConnectionManager;
+
+public class DBTester {
+
+	public static void main(String[] args) {
+		Connection _connection = DBConnectionManager.getConnection();
+		_connection.close();
+	}
+
+}

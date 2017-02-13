@@ -1,0 +1,49 @@
+package dbconnector;
+
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import parser.DataObject;
+import parser.JSONObjectAccessor;
+
+public class DBService {
+	private Connection _connection;
+
+	public DBService(Connection _connection) {
+		super();
+		this._connection = _connection;
+	}
+	
+	public void createTable(JSONObjectAccessor joa){
+		StringBuilder insertStmt = new StringBuilder();
+		insertStmt.append("CREATE TABLE ");
+		String[] tableName = joa.getId().split("//.");
+		insertStmt.append(tableName[tableName.length-1].toUpperCase());
+		insertStmt.append("(id int not null auto_increment,");
+		joa.getMetaDataMap().entrySet().stream().forEach(e -> {
+													insertStmt.append(getQueryPart(e.getValue()));
+												 });
+		insertStmt.append("PRIMARY KEY ( id )");
+		try(PreparedStatement createStatement = _connection.prepareStatement()){
+			
+		}
+	}
+	
+	private String getQueryPart(Object attributeObject){
+		Map<String,Object> attributeMap = (HashMap<String,Object>)attributeObject;
+		String column = (String)attributeMap.get("name");
+		String type = (String)attributeMap.get("type");
+		int length = (int)attributeMap.get("length");
+		boolean required = (boolean)attributeMap.get("required");
+		String partQuery = column;
+		if(type.equals("string"))
+			partQuery += " varchar("+length+")";
+		if(required)
+			partQuery += " NOT NULL";
+		partQuery += ",";
+		return partQuery;
+	}
+}

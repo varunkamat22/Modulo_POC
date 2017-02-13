@@ -42,6 +42,10 @@ public class JSONObjectAccessor {
 			return ((Map<String, Object>) attributeMap.get(tokens[0])).get(tokens[1]);
 		}
 	}
+
+	public Map<String, Object> getAttributeMap() {
+		return attributeMap;
+	}	
 	
 }
 

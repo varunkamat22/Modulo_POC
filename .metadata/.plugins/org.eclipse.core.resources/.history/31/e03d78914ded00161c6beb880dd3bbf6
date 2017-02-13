@@ -1,0 +1,27 @@
+package dbconnector;
+
+import java.sql.Connection;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import parser.DataObject;
+import parser.JSONObjectAccessor;
+
+public class DBService {
+	private Connection _connection;
+
+	public DBService(Connection _connection) {
+		super();
+		this._connection = _connection;
+	}
+	
+	public void createTable(JSONObjectAccessor joa){
+		StringBuilder insertStmt = new StringBuilder();
+		insertStmt.append("CREATE TABLE ");
+		String[] tableName = joa.getId().split("//.");
+		insertStmt.append(tableName[tableName.length-1].toUpperCase());
+		try(PreparedStatement createStatement = _connection.prepareStatement()){
+			
+		}
+	}
+}

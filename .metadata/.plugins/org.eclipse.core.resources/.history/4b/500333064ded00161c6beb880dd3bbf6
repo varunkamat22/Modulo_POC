@@ -1,0 +1,24 @@
+package dbconnector;
+
+import java.sql.Connection;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import parser.DataObject;
+
+public class DBService {
+	private Connection _connection;
+
+	public DBService(Connection _connection) {
+		super();
+		this._connection = _connection;
+	}
+	
+	public void createTable(DataObject dao){
+		StringBuilder insertStmt = new StringBuilder();
+		
+		try(PreparedStatement createStatement = _connection.prepareStatement()){
+			
+		}
+	}
+}

@@ -1,0 +1,75 @@
+package servlet;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.AsyncContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class RoutingServlet
+ */
+@WebServlet(urlPatterns = "/RoutingServlet",asyncSupported = true)
+public class RoutingServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public RoutingServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		final long startTime = System.nanoTime();
+		final AsyncContext asyncContext = request.startAsync(request, response);
+		
+		Thread t = new Thread(() -> {
+			try{
+				Thread.sleep(5000);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			Map<String,String> routingMap = new HashMap<>();
+			routingMap.put("google", "https://google.com");
+			routingMap.put("news", "https://news.google.co.in");
+			
+			String module = request.getRequestURI().replaceAll(request.getContextPath()+"\\/", "").split("\\/")[0];
+			System.out.println(module);
+			try{
+			URL url = new URL(routingMap.get(module));
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			StringBuffer res = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				res.append(inputLine);
+			}
+			response.getWriter().append(res);
+			in.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			asyncContext.complete();
+		});
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

@@ -1,0 +1,16 @@
+package dbconnector;
+
+import java.sql.Connection;
+
+public class DBService {
+	private Connection _connection;
+
+	public DBService(Connection _connection) {
+		super();
+		this._connection = _connection;
+	}
+	
+	public void createTable(DataObject dao){
+		
+	}
+}

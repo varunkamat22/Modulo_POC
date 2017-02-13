@@ -1,0 +1,15 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import dbconnector.DBConnectionManager;
+
+public class DBTester {
+
+	public static void main(String[] args) throws SQLException {
+		Connection _connection = DBConnectionManager.getConnection();
+		_connection.close();
+	}
+
+}

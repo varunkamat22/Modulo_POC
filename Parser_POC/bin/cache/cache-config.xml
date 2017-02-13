@@ -1,0 +1,13 @@
+<ehcache:config
+        xmlns:ehcache="http://www.ehcache.org/v3"
+        xmlns:jcache="http://www.ehcache.org/v3/jsr107">
+
+<ehcache:cache alias="modulo_cache">
+    <ehcache:key-type>java.lang.String</ehcache:key-type>
+    <ehcache:value-type>java.lang.String</ehcache:value-type>
+    <ehcache:resources>
+        <ehcache:heap unit="entries">1</ehcache:heap>
+     <!--   <ehcache:offheap unit="MB">1</ehcache:offheap> -->
+    </ehcache:resources>
+</ehcache:cache>
+</ehcache:config>

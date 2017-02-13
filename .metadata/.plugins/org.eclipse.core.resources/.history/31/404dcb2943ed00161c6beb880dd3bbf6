@@ -1,0 +1,12 @@
+package dbconnector;
+
+import java.sql.Connection;
+
+public class DBConnectionManager {
+	private static Connection _connection; 
+	
+	public static Connection getConnection(){
+		return _connection;
+	}
+	
+}

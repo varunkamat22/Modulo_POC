@@ -1,0 +1,39 @@
+package test;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class RoutingTester {
+
+	public static void main(String[] args) {
+		int count = 0;
+		for (int i = 0; i < 1000; i++) {
+
+			Thread t = new Thread(() -> {
+				URL url;
+				try {
+					url = new URL("http://localhost:8080/RoutingPOC/news");
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn.setRequestMethod("GET");
+					conn.connect();
+					BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+					String inputLine;
+					StringBuffer res = new StringBuffer();
+
+					while ((inputLine = in.readLine()) != null) {
+						res.append(inputLine);
+					}
+					in.close();
+					System.out.println("done");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			t.start();
+		}
+	}
+}

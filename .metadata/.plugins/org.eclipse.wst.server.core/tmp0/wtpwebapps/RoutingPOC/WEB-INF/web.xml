@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaeehttp://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+	<servlet>
+		<servlet-name>routingServlet</servlet-name>
+		<servlet-class>servlet.RoutingServlet</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-class>
+			org.glassfish.jersey.servlet.ServletContainer
+		</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>services</param-value>
+		</init-param> 
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>routingServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+		
+		<servlet-name>jersey-serlvet</servlet-name>
+		<url-pattern>/service/*</url-pattern>
+	</servlet-mapping>
+</web-app>   

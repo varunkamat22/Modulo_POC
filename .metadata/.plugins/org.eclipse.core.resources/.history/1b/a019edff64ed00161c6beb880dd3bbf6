@@ -1,0 +1,69 @@
+package dbconnector;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import parser.DataObject;
+import parser.JSONObjectAccessor;
+
+public class DBService {
+	private Connection _connection;
+
+	public DBService(Connection _connection) {
+		super();
+		this._connection = _connection;
+	}
+	
+	public void createTable(JSONObjectAccessor joa) throws SQLException{
+		_connection.setAutoCommit(false);
+		
+		StringBuilder insertStmt = new StringBuilder();
+		insertStmt.append("CREATE TABLE ");
+		String[] tableName = joa.getId().split("\\.");
+		insertStmt.append(tableName[tableName.length-1].toUpperCase());
+		insertStmt.append("(id int not null auto_increment,");
+		joa.getAttributeMap().entrySet().stream().forEach(e -> {
+													insertStmt.append(getQueryPart(e.getValue()));
+												 });
+		insertStmt.append("PRIMARY KEY ( id ))");
+		System.out.println(insertStmt.toString());
+		try(PreparedStatement createStatement = _connection.prepareStatement(insertStmt.toString())){
+			createStatement.execute();
+			_connection.commit();
+			System.out.println(tableName[tableName.length-1].toUpperCase()+" table has been successfully created");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		_connection.setAutoCommit(true);
+	}
+	
+	private String getQueryPart(Object attributeObject){
+		Map<String,Object> attributeMap = (HashMap<String,Object>)attributeObject;
+		String column = (String)attributeMap.get("name");
+		String type = (String)attributeMap.get("type");
+		int length = (int)attributeMap.get("length");
+		boolean required = (boolean)attributeMap.get("required");
+		String partQuery = column;
+		if(type.equals("string"))
+			partQuery += " varchar("+length+")";
+		if(required)
+			partQuery += " NOT NULL";
+		partQuery += ",";
+		return partQuery;
+	}
+	
+	public int insertIntoDB(DataObject dao) throws SQLException{
+		_connection.setAutoCommit(false);
+		StringBuilder insertStmt = new StringBuilder("insert into ");
+		String[] tableName = dao.getId().split("\\.");
+		insertStmt.append(tableName[tableName.length-1].toUpperCase());
+		dao.getAttributeValueMap().entrySet().stream().forEach(e -> {
+			insertStmt.append(e.getKey()+",");
+		});
+		insertStmt.deleteCharAt(insertStmt.lastIndexOf(","));
+		
+	}
+}
